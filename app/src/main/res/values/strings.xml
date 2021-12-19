@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">Pictrix</string>
+    <string name="sorting1">SORTING</string>
+    <string name="sorting2">Sorting</string>
+    <string name="newest1">Newest</string>
+    <string name="categories1">CATEGORIES</string>
+    <string name="apply1">APPLY</string>
+    <string name="arts_and_entertainment">Arts and Entertainment</string>
+    <string name="cancel1">CANCEL</string>
+    <string name="Fragment_1">Fragment 1</string>
+    <string name="Fragment_2">Fragment 2</string>
+    <string name="Fragment_3">Fragment 3</string>
+    <string name="Accepted_tests">Accepted tests</string>
+    <string name="show_all_6">Show all (6)</string>
+    <string name="new_cooments">New Comments</string>
+    <string name="ունեմ">ունեմ</string>
+    <string name="ցանկանումեմ">ցանկանում եմ</string>
+    <string name="third_fragment">This is the third fragment</string>
+    <string name="CooperKo">CooperKo</string>
+    <string name="advanced_ticketing">Advenced Ticketing</string>
+    <string name="coverage">Coverage | Ends In</string>
+    <string name="bug_comment">Bug Comment</string>
+    <string name="test_io_update">test IO update:</string>
+    <string name="only_product">#29 | Only Product</string>
+    <string name="some_text">Some text</string>
+    <string name="send">Send</string>
+    <string name="type_hint">Type something to send.</string>
+    <string name="location">Location</string>
+    <string name="type_something_here">Type something here</string>
+    <string name="your_message_is">Your Message Is</string>
+    <string name="gallery">Gallery</string>
+    <string name="send_message">Send Message</string>
+    <string name="gallery_2">Gallery 2</string>
+    <string name="profile">Profile</string>
+    <string name="posts">POSTS</string>
+    <string name="followers">FOLLOWERS</string>
+    <string name="_200">200</string>
+    <string name="name_surname">Name Surname</string>
+    <string name="_49">49</string>
+    <string name="start_service">Start Service</string>
+    <string name="stop_service">Stop Service</string>
+    <string name="ringtone">Ringtone</string>
+    <string name="viewpager2">ViewPager2</string>
+    <string name="bound_service_binder">Bound Service Binder</string>
+    <string name="filters">Filters</string>
+    <string name="reset_all">Reset All</string>
+    <string name="sort_by">Sort By</string>
+    <string name="date_newest_first">Date (newest first)</string>
+    <string name="date_oldest_first">Date (oldest first)</string>
+    <string name="task_type">Task type</string>
+    <string name="buf_fix_confirmations">Bug Fix Confirmations</string>
+    <string name="bug_reproductions">Bug Reproductions</string>
+    <string name="apply_filters">Apply Filters</string>
+    <string name="dialog">Dialog</string>
+    <string name="type_comment_here">Write comment here</string>
+    <string name="submit_comment">Submit Comment</string>
+    <string name="oops">Oops.....</string>
+    <string name="oops_message">For the application to work correctly, please disable Airplane mode</string>
+    <string name="OK">OK</string>
+    <string-array name="bank">
+        <item>Բանկ</item>
+    </string-array>
+    <string-array name="kanxik">
+        <item>Կանխիք</item>
+    </string-array>
+    <string-array name="artsakhbank">
+        <item>Արցախբանկ</item>
+    </string-array>
+    <string-array name="amount_from">
+        <item>USD</item>
+    </string-array>
+    <string-array name="amount_to">
+        <item>AMD</item>
+    </string-array>
+</resources>
