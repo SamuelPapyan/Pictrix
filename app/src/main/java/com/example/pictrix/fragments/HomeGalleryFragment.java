@@ -66,8 +66,7 @@ public class HomeGalleryFragment extends Fragment {
                 getProfileClick(profileName);
             }
         });
-        RetrofitSetup retrofitSetup = new RetrofitSetup();
-        Images images = retrofitSetup.initRetrofit();
+        Images images = Images.create();
         Call<SearchPhotos> landscape = images.searchImage("landscape");
         landscape.enqueue(new Callback<SearchPhotos>() {
             @Override
@@ -77,7 +76,7 @@ public class HomeGalleryFragment extends Fragment {
                     List<Photo> photos = body.getPhotos();
                     for (Photo photo : photos) {
                         String profileName = photo.getPhotographer();
-                        String image = photo.getSrc().getOriginal();
+                        String image = photo.getSrc().getMediumUrl();
                         String profileImage = "https://img.freepik.com/free-photo/this-is-beautiful-landscape-emerald-lake-canada-s-youhe-national-park_361746-26.jpg?size=626&ext=jpg";
                         imageList.add(new Image(profileImage,profileName,image));
                     }

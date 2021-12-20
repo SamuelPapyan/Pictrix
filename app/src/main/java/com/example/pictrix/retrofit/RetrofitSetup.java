@@ -9,13 +9,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitSetup {
     private static final String BASE_URL = "https://api.pexels.com";
 
-    public Images initRetrofit(){
+    public static Retrofit initRetrofit(){
         Retrofit.Builder builder = new Retrofit.Builder();
         builder.baseUrl(BASE_URL);
         builder.client(getOkHttpClient());
         builder.addConverterFactory(GsonConverterFactory.create());
-        Retrofit retrofit = builder.build();
-        return retrofit.create(Images.class);
+
+        return builder.build();
     }
     private static OkHttpClient getOkHttpClient(){
         OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder();

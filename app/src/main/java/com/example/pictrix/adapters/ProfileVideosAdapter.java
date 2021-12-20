@@ -11,25 +11,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.pictrix.R;
 import com.example.pictrix.classes.Image;
+import com.example.pictrix.classes.VideoImage;
 import com.example.pictrix.interfaces.ItemClick;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ProfileImageAdapter extends RecyclerView.Adapter<ProfileImageAdapter.ImageViewHolder>{
-    List<Image> list = Collections.emptyList();
+public class ProfileVideosAdapter extends RecyclerView.Adapter<ProfileVideosAdapter.VideoViewHolder>{
+    List<VideoImage> list = Collections.emptyList();
     String profileQualifier;
     ItemClick itemClick = null;
     @NonNull
     @Override
-    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public VideoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_gallery_item,parent,false);
-        return new ImageViewHolder(view);
+        return new VideoViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull VideoViewHolder holder, int position) {
         holder.initDate(list.get(position));
     }
 
@@ -38,21 +39,21 @@ public class ProfileImageAdapter extends RecyclerView.Adapter<ProfileImageAdapte
         return list.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
-        public ImageViewHolder(@NonNull View itemView) {
+    public class VideoViewHolder extends RecyclerView.ViewHolder {
+        public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
         }
-        void initDate(Image image){
+        void initDate(VideoImage video){
             AppCompatImageView imageView = itemView.findViewById(R.id.some_image);
             Glide.with(itemView.getContext())
-                    .load(image.getImageSrc())
+                    .load(video.getVideoImageUrl())
                     .into(imageView);
             imageView.setOnClickListener(v->{
-                itemClick.onImageClick(image.getImageSrc());
+                itemClick.onImageClick(video.getVideoUrl());
             });
         }
     }
-    public void setList(ArrayList<Image> arrayList){
+    public void setList(ArrayList<VideoImage> arrayList){
         this.list = arrayList;
         notifyDataSetChanged();
     }

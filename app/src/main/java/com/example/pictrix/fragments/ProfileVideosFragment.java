@@ -14,27 +14,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pictrix.MainActivity;
 import com.example.pictrix.R;
-import com.example.pictrix.adapters.HomeGalleryAdapter;
-import com.example.pictrix.adapters.ProfileImageAdapter;
+import com.example.pictrix.adapters.ProfileVideosAdapter;
 import com.example.pictrix.classes.Image;
+import com.example.pictrix.classes.VideoImage;
 import com.example.pictrix.interfaces.ItemClick;
-import com.example.pictrix.retrofit.Images;
-import com.example.pictrix.retrofit.Photo;
-import com.example.pictrix.retrofit.RetrofitSetup;
 import com.example.pictrix.retrofit.SearchPhotos;
+import com.example.pictrix.retrofit.SearchVideos;
+import com.example.pictrix.retrofit.Video;
+import com.example.pictrix.retrofit.Videos;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfileGalleryFragment extends Fragment {
-    ProfileImageAdapter rcAdapter = new ProfileImageAdapter();
-    ArrayList<Image> imageList = new ArrayList<>();
+public class ProfileVideosFragment extends Fragment {
+    ProfileVideosAdapter rcAdapter = new ProfileVideosAdapter();
+    ArrayList<VideoImage> imageList = new ArrayList<>();
     private String profileQualifier;
     @Nullable
     @Override
@@ -55,26 +53,25 @@ public class ProfileGalleryFragment extends Fragment {
             }
         });
         rcView.setAdapter(rcAdapter);
-        Images images = Images.create();
-        Call<SearchPhotos> landscape = images.searchImage("landscape");
-        landscape.enqueue(new Callback<SearchPhotos>() {
+        Videos videos = Videos.create();
+        Call<SearchVideos> landscape = videos.searchVideo("landscape");
+        landscape.enqueue(new Callback<SearchVideos>() {
             @Override
-            public void onResponse(Call<SearchPhotos> call, Response<SearchPhotos> response) {
-                SearchPhotos body = response.body();
+            public void onResponse(Call<SearchVideos> call, Response<SearchVideos> response) {
+                SearchVideos body = response.body();
                 if (body != null) {
-                    List<Photo> photos = body.getPhotos();
-                    for (Photo photo : photos) {
-                        String profileName = photo.getPhotographer();
-                        String image = photo.getSrc().getSmallUrl();
-                        String profileImage = "https://img.freepik.com/free-photo/this-is-beautiful-landscape-emerald-lake-canada-s-youhe-national-park_361746-26.jpg?size=626&ext=jpg";
-                        imageList.add(new Image(profileImage,profileName, image));
+                    List<Video> videos = body.getVideos();
+                    for (Video video : videos) {
+                        String videoImage = video.getImage();
+                        String videoUrl = video.getUrl();
+                        imageList.add(new VideoImage(videoImage,videoUrl));
                     }
                     rcAdapter.setList(imageList);
                 }
             }
 
             @Override
-            public void onFailure(Call<SearchPhotos> call, Throwable t) {
+            public void onFailure(Call<SearchVideos> call, Throwable t) {
                 System.out.println(t.getLocalizedMessage());
             }
         });
@@ -84,9 +81,9 @@ public class ProfileGalleryFragment extends Fragment {
         this.profileQualifier = profileQualifier;
     }
     private void getImageClick(String src){
-        FullImageFragment secondFragment = new FullImageFragment();
+        FullSizeVideoFragment secondFragment = new FullSizeVideoFragment();
         Bundle args = new Bundle();
-        args.putString("imageSrc",src);
+        args.putString("videoUrl",src);
         secondFragment.setArguments(args);
         MainActivity activity = (MainActivity)getActivity();
         FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();

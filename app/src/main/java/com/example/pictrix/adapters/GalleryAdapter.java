@@ -6,6 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.pictrix.fragments.ProfileFragment;
 import com.example.pictrix.fragments.ProfileGalleryFragment;
+import com.example.pictrix.fragments.ProfileVideosFragment;
 
 public class GalleryAdapter extends FragmentStateAdapter {
     private String profileQualifier;
@@ -22,7 +23,7 @@ public class GalleryAdapter extends FragmentStateAdapter {
                 fragment1.setProfileQualifier(profileQualifier);
                 return fragment1;
             case 1:
-                ProfileGalleryFragment fragment2 = new ProfileGalleryFragment();
+                ProfileVideosFragment fragment2 = new ProfileVideosFragment();
                 fragment2.setProfileQualifier(profileQualifier);
                 return fragment2;
         }
