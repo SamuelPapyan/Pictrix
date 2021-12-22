@@ -23,6 +23,8 @@ import com.example.pictrix.retrofit.Images;
 import com.example.pictrix.retrofit.Photo;
 import com.example.pictrix.retrofit.RetrofitSetup;
 import com.example.pictrix.retrofit.SearchPhotos;
+import com.example.pictrix.room.AppDatabase;
+import com.example.pictrix.room.ImageDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +84,7 @@ public class HomeGalleryFragment extends Fragment {
                     }
                     rcAdapter.setList(imageList);
                     rcView.setAdapter(rcAdapter);
+                    saveToDb(imageList);
                 }
             }
             @Override
@@ -113,5 +116,16 @@ public class HomeGalleryFragment extends Fragment {
         ft.addToBackStack(null);
         ft.commit();
     }
-
+    private void saveToDb(ArrayList<Image> images){
+        AppDatabase db = AppDatabase.getInstance(getContext());
+        ImageDao imageDao = db.getImageDao();
+        List<com.example.pictrix.room.Images> entity = new ArrayList<>();
+        for(Image image : images){
+            com.example.pictrix.room.Images item = new com.example.pictrix.room.Images();
+            item.setImageUrl(image.getImageSrc());
+            item.setPhotographer(image.getProfileName());
+            entity.add(item);
+        }
+        imageDao.insertAll(entity);
+    }
 }

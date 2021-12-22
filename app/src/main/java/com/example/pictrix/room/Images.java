@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "images")
 public class Images {
     @PrimaryKey(autoGenerate = true)
-    int id;
+    int id = 0;
 
     @ColumnInfo(name = "imageUrl")
     String imageUrl;
