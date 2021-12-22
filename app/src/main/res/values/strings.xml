@@ -72,4 +72,8 @@
     <string-array name="amount_to">
         <item>AMD</item>
     </string-array>
+    <string name="hintText">Enter User Name</string>
+    <string name="heading">Content Provider In Android</string>
+    <string name="insertButtontext">Insert Data</string>
+    <string name="loadButtonText">Load Data</string>
 </resources>
