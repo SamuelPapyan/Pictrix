@@ -76,4 +76,5 @@
     <string name="heading">Content Provider In Android</string>
     <string name="insertButtontext">Insert Data</string>
     <string name="loadButtonText">Load Data</string>
+    <string name="there_is_no_posts">There is no posts.</string>
 </resources>
