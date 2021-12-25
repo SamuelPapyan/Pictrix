@@ -1,5 +1,7 @@
 package com.example.pictrix.fragments;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,10 +9,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.pictrix.MainActivity;
 import com.example.pictrix.R;
@@ -37,6 +42,9 @@ public class HomeGalleryFragment extends Fragment {
     HomeGalleryAdapter rcAdapter = new HomeGalleryAdapter();
     ArrayList<Image> imageList = new ArrayList<>();
     RecyclerView rcView;
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    private final String profileImage = "https://img.freepik.com/free-photo/this-is-beautiful-landscape-emerald-lake-canada-s-youhe-national-park_361746-26.jpg?size=626&ext=jpg";
 
     @Nullable
     @Override
@@ -46,6 +54,20 @@ public class HomeGalleryFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setRecyclerView(view);
+
+        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        actionBar.show();
+        AppCompatTextView appBarTitle = getActivity().findViewById(R.id.appBarHeading);
+        appBarTitle.setText("Home");
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(()->{
+            loadImages();
+        });
+        loadImages();
+    }
+
+    private void setRecyclerView(View view){
         rcView = view.findViewById(R.id.mainGalleryRcView);
         LinearLayoutManager llm = new LinearLayoutManager(view.getContext(),RecyclerView.VERTICAL,false);
         rcView.setLayoutManager(llm);
@@ -66,30 +88,6 @@ public class HomeGalleryFragment extends Fragment {
             @Override
             public void onProfileClick(String profileName) {
                 getProfileClick(profileName);
-            }
-        });
-        Images images = Images.create();
-        Call<SearchPhotos> landscape = images.searchImage("landscape");
-        landscape.enqueue(new Callback<SearchPhotos>() {
-            @Override
-            public void onResponse(Call<SearchPhotos> call, Response<SearchPhotos> response) {
-                SearchPhotos body = response.body();
-                if (body != null) {
-                    List<Photo> photos = body.getPhotos();
-                    for (Photo photo : photos) {
-                        String profileName = photo.getPhotographer();
-                        String image = photo.getSrc().getMediumUrl();
-                        String profileImage = "https://img.freepik.com/free-photo/this-is-beautiful-landscape-emerald-lake-canada-s-youhe-national-park_361746-26.jpg?size=626&ext=jpg";
-                        imageList.add(new Image(profileImage,profileName,image));
-                    }
-                    rcAdapter.setList(imageList);
-                    rcView.setAdapter(rcAdapter);
-                    saveToDb(imageList);
-                }
-            }
-            @Override
-            public void onFailure(Call<SearchPhotos> call, Throwable t) {
-                System.out.println(t.getLocalizedMessage());
             }
         });
     }
@@ -126,6 +124,52 @@ public class HomeGalleryFragment extends Fragment {
             item.setPhotographer(image.getProfileName());
             entity.add(item);
         }
+        imageDao.deleteAll();
         imageDao.insertAll(entity);
+    }
+    private List<com.example.pictrix.room.Images> getImagesFromRoom(){
+        AppDatabase db = AppDatabase.getInstance(getContext());
+        ImageDao imageDao = db.getImageDao();
+        return imageDao.getImages();
+    }
+    private void loadImages(){
+        if(isConnectedToInternet()){
+            Images images = Images.create();
+            Call<SearchPhotos> landscape = images.searchImage("landscape");
+            landscape.enqueue(new Callback<SearchPhotos>() {
+                @Override
+                public void onResponse(Call<SearchPhotos> call, Response<SearchPhotos> response) {
+                    SearchPhotos body = response.body();
+                    if (body != null) {
+                        List<Photo> photos = body.getPhotos();
+                        for (Photo photo : photos) {
+                            String profileName = photo.getPhotographer();
+                            String image = photo.getSrc().getMediumUrl();
+                            imageList.add(new Image(profileImage,profileName,image));
+                        }
+                        rcAdapter.setList(imageList);
+                        rcView.setAdapter(rcAdapter);
+                        saveToDb(imageList);
+                    }
+                }
+                @Override
+                public void onFailure(Call<SearchPhotos> call, Throwable t) {
+                    System.out.println(t.getLocalizedMessage());
+                }
+            });
+        }else{
+            List<com.example.pictrix.room.Images> data = getImagesFromRoom();
+            imageList = new ArrayList<>();
+            for(com.example.pictrix.room.Images image : data){
+                imageList.add(new Image(profileImage,image.getPhotographer(),image.getImageUrl()));
+            }
+            rcAdapter.setList(imageList);
+            rcView.setAdapter(rcAdapter);
+        }
+
+    }
+    private boolean isConnectedToInternet(){
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 }

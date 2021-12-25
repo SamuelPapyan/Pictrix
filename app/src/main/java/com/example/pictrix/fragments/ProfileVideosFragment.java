@@ -43,7 +43,7 @@ public class ProfileVideosFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView rcView = view.findViewById(R.id.imagesRCView);
+        RecyclerView rcView = view.findViewById(R.id.videosRCView);
         GridLayoutManager glm = new GridLayoutManager(view.getContext(),3,RecyclerView.VERTICAL,false);
         rcView.setLayoutManager(glm);
         rcAdapter.setItemClick(new ItemClick() {

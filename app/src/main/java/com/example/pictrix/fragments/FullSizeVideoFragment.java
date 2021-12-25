@@ -10,8 +10,10 @@ import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
+import com.example.pictrix.MainActivity;
 import com.example.pictrix.R;
 
 public class FullSizeVideoFragment extends Fragment {
@@ -23,6 +25,8 @@ public class FullSizeVideoFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        actionBar.hide();
         Bundle args = getArguments();
         if(args != null){
             VideoView videoView = view.findViewById(R.id.video_view);

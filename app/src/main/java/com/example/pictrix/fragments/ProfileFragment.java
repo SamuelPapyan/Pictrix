@@ -7,11 +7,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.example.pictrix.MainActivity;
 import com.example.pictrix.R;
 import com.example.pictrix.adapters.GalleryAdapter;
 import com.example.pictrix.adapters.ProfileImageAdapter;
@@ -25,12 +28,15 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.profile_layout,container, false);
+        View view = inflater.inflate(R.layout.profile_layout,container,  false);
+
         AppCompatImageView profileImage = view.findViewById(R.id.profileImage);
         galleryAdapter = new GalleryAdapter(this);
         Bundle args = getArguments();
         if(args != null){
             galleryAdapter.setProfileQualifier(args.getString("profile"));
+            AppCompatTextView profileName = view.findViewById(R.id.name_surname);
+            profileName.setText(args.getString("profile"));
         }
         tabLayout = view.findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.images_icon));
@@ -60,5 +66,14 @@ public class ProfileFragment extends Fragment {
                 .into(profileImage);
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        actionBar.show();
+        AppCompatTextView appBarTitle = getActivity().findViewById(R.id.appBarHeading);
+        appBarTitle.setText("Profile");
     }
 }

@@ -1,6 +1,8 @@
 package com.example.pictrix;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -23,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
         //Fragments
         HomeGalleryFragment fragment1 = new HomeGalleryFragment();
 
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, fragment1);
         ft.addToBackStack(null);

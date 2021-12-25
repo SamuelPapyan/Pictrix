@@ -1,5 +1,7 @@
 package com.example.pictrix.adapters;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pictrix.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.MyViewHolder>{
 
-    private static String[] items = {"Comment 1", "Comment 2", "Comment 3"};
+    private static List<String> items = Collections.emptyList();
 
     @NonNull
     @Override
@@ -25,12 +30,20 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.initData(items[position]);
+        holder.initData(items.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return items.length;
+        return items.size();
+    }
+
+    public void refreshData(Set<String> commentsSet){
+        items = new ArrayList<>();
+        for(String comm : commentsSet){
+            items.add(comm);
+        }
+        notifyDataSetChanged();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

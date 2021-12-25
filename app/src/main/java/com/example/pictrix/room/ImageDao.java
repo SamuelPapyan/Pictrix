@@ -10,7 +10,7 @@ import java.util.List;
 @Dao
 public interface ImageDao {
     @Query("select * from images")
-    List<Images> getImage();
+    List<Images> getImages();
 
     @Insert
     void insert(Images image);
@@ -20,4 +20,7 @@ public interface ImageDao {
 
     @Delete
     void delete(Images image);
+
+    @Query("delete from images")
+    void deleteAll();
 }
