@@ -8,6 +8,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/drawable/like_off.xml" value="0.7875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/drawable/like_on.xml" value="0.1953125" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/drawable/videos_icon.xml" value="0.1953125" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/drawable/white_video_icon.xml" value="0.12395833333333334" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/activity_main.xml" value="0.17916666666666667" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/comment_item_layout.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/comments_layout.xml" value="0.17760416666666667" />
@@ -17,11 +18,12 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/home_gallery_item.xml" value="0.17916666666666667" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/home_gallery_layout.xml" value="0.17916666666666667" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/navigation_view_layout.xml" value="0.19375" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/no_posts_layout.xml" value="0.1734375" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/oops_layout.xml" value="0.17760416666666667" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/profile_gallery_item.xml" value="0.67" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/profile_gallery_layout.xml" value="0.17916666666666667" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/profile_layout.xml" value="0.17916666666666667" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/profile_videos_item.xml" value="0.1953125" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/profile_videos_item.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Pictrix/app/src/main/res/layout/profile_videos_layout.xml" value="0.1953125" />
       </map>
     </option>

@@ -24,17 +24,4 @@ public class VideoImage {
     public String getVideoImageUrl() {
         return videoImageUrl;
     }
-    public static List<VideoImage> getVideos(){
-        ArrayList<VideoImage> videoImages = new ArrayList<>();
-        videoImages.add(new VideoImage("https://static-videos.pexels.com/videos/1093662/pictures/preview-0.jpg","https://pin.it/5DM9lrv" ));
-        videoImages.add(new VideoImage("https://static-videos.pexels.com/videos/1093662/pictures/preview-0.jpg","https://pin.it/5DM9lrv" ));
-        videoImages.add(new VideoImage("https://static-videos.pexels.com/videos/1093662/pictures/preview-0.jpg","https://pin.it/5DM9lrv" ));
-        videoImages.add(new VideoImage("https://static-videos.pexels.com/videos/1093662/pictures/preview-0.jpg","https://pin.it/5DM9lrv" ));
-        videoImages.add(new VideoImage("https://static-videos.pexels.com/videos/1093662/pictures/preview-0.jpg","https://pin.it/5DM9lrv" ));
-        videoImages.add(new VideoImage("https://static-videos.pexels.com/videos/1093662/pictures/preview-0.jpg","https://pin.it/5DM9lrv" ));
-        videoImages.add(new VideoImage("https://static-videos.pexels.com/videos/1093662/pictures/preview-0.jpg","https://pin.it/5DM9lrv" ));
-        videoImages.add(new VideoImage("https://static-videos.pexels.com/videos/1093662/pictures/preview-0.jpg","https://pin.it/5DM9lrv" ));
-        videoImages.add(new VideoImage("https://static-videos.pexels.com/videos/1093662/pictures/preview-0.jpg","https://pin.it/5DM9lrv" ));
-        return videoImages;
-    }
 }

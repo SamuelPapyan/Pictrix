@@ -16,9 +16,10 @@
         android:id="@+id/image_video_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/some_image"
-        app:layout_constraintRight_toRightOf="@id/some_image"
+        app:layout_constraintBottom_toBottomOf="@id/some_video"
+        app:layout_constraintRight_toRightOf="@id/some_video"
         android:layout_margin="5dp"
         android:src="@drawable/white_video_icon"
         />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

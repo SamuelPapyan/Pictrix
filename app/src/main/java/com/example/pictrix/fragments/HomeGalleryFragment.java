@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ import com.example.pictrix.retrofit.RetrofitSetup;
 import com.example.pictrix.retrofit.SearchPhotos;
 import com.example.pictrix.room.AppDatabase;
 import com.example.pictrix.room.ImageDao;
+import com.example.pictrix.services.InternetService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,7 @@ public class HomeGalleryFragment extends Fragment {
     ArrayList<Image> imageList = new ArrayList<>();
     RecyclerView rcView;
     SwipeRefreshLayout swipeRefreshLayout;
+    Group noPostsGroup;
 
     private final String profileImage = "https://img.freepik.com/free-photo/this-is-beautiful-landscape-emerald-lake-canada-s-youhe-national-park_361746-26.jpg?size=626&ext=jpg";
 
@@ -55,7 +58,7 @@ public class HomeGalleryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setRecyclerView(view);
-
+        noPostsGroup = view.findViewById(R.id.noDataGroup);
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.show();
         AppCompatTextView appBarTitle = getActivity().findViewById(R.id.appBarHeading);
@@ -133,7 +136,7 @@ public class HomeGalleryFragment extends Fragment {
         return imageDao.getImages();
     }
     private void loadImages(){
-        if(isConnectedToInternet()){
+        if(InternetService.isConnectedToInternet(getContext())){
             Images images = Images.create();
             Call<SearchPhotos> landscape = images.searchImage("landscape");
             landscape.enqueue(new Callback<SearchPhotos>() {
@@ -150,26 +153,32 @@ public class HomeGalleryFragment extends Fragment {
                         rcAdapter.setList(imageList);
                         rcView.setAdapter(rcAdapter);
                         saveToDb(imageList);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
                 @Override
                 public void onFailure(Call<SearchPhotos> call, Throwable t) {
                     System.out.println(t.getLocalizedMessage());
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             });
         }else{
             List<com.example.pictrix.room.Images> data = getImagesFromRoom();
-            imageList = new ArrayList<>();
-            for(com.example.pictrix.room.Images image : data){
-                imageList.add(new Image(profileImage,image.getPhotographer(),image.getImageUrl()));
+            if(data.size() > 0){
+                rcView.setVisibility(View.VISIBLE);
+                noPostsGroup.setVisibility(View.GONE);
+                imageList = new ArrayList<>();
+                for(com.example.pictrix.room.Images image : data){
+                    imageList.add(new Image(profileImage,image.getPhotographer(),image.getImageUrl()));
+                }
+                rcAdapter.setList(imageList);
+                rcView.setAdapter(rcAdapter);
+            }else{
+                rcView.setVisibility(View.GONE);
+                noPostsGroup.setVisibility(View.VISIBLE);
             }
-            rcAdapter.setList(imageList);
-            rcView.setAdapter(rcAdapter);
+            swipeRefreshLayout.setRefreshing(false);
         }
 
-    }
-    private boolean isConnectedToInternet(){
-        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 }

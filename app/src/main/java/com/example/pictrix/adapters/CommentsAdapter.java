@@ -38,11 +38,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.MyView
         return items.size();
     }
 
-    public void refreshData(Set<String> commentsSet){
-        items = new ArrayList<>();
-        for(String comm : commentsSet){
-            items.add(comm);
-        }
+    public void refreshData(List<String> commentsList){
+        items = commentsList;
         notifyDataSetChanged();
     }
 

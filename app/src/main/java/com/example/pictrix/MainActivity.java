@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, fragment1);
-        ft.addToBackStack(null);
         ft.commit();
         airPlaneModeReceiver = new AirPlaneModeReceiver();
         IntentFilter intentFilter = new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED);

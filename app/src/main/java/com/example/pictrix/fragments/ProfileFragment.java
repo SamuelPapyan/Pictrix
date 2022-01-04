@@ -43,6 +43,7 @@ public class ProfileFragment extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.videos_icon));
         viewPager2 = view.findViewById(R.id.pager);
         viewPager2.setAdapter(galleryAdapter);
+        viewPager2.setOffscreenPageLimit(2);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
