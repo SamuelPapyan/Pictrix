@@ -148,7 +148,12 @@ public class HomeGalleryFragment extends Fragment {
                         for (Photo photo : photos) {
                             String profileName = photo.getPhotographer();
                             String image = photo.getSrc().getMediumUrl();
-                            imageList.add(new Image(profileImage,profileName,image));
+                            String littleImageUrl = photo.getSrc().getSmallUrl();
+                            imageList.add(new Image(profileImage,
+                                    profileName,
+                                    image,
+                                    littleImageUrl)
+                            );
                         }
                         rcAdapter.setList(imageList);
                         rcView.setAdapter(rcAdapter);
@@ -169,7 +174,12 @@ public class HomeGalleryFragment extends Fragment {
                 noPostsGroup.setVisibility(View.GONE);
                 imageList = new ArrayList<>();
                 for(com.example.pictrix.room.Images image : data){
-                    imageList.add(new Image(profileImage,image.getPhotographer(),image.getImageUrl()));
+                    imageList.add(new Image(
+                            profileImage,
+                            image.getPhotographer(),
+                            image.getImageUrl(),
+                            image.getLittleImageUrl()
+                    ));
                 }
                 rcAdapter.setList(imageList);
                 rcView.setAdapter(rcAdapter);

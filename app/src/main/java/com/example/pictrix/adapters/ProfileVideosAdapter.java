@@ -19,13 +19,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class ProfileVideosAdapter extends RecyclerView.Adapter<ProfileVideosAdapter.VideoViewHolder>{
-    List<VideoImage> list = Collections.emptyList();
+    List<VideoImage> list = new ArrayList<>();
     String profileQualifier;
     ItemClick itemClick = null;
     @NonNull
     @Override
     public VideoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_gallery_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_videos_item,parent,false);
         return new VideoViewHolder(view);
     }
 
@@ -44,7 +44,7 @@ public class ProfileVideosAdapter extends RecyclerView.Adapter<ProfileVideosAdap
             super(itemView);
         }
         void initDate(VideoImage video){
-            AppCompatImageView imageView = itemView.findViewById(R.id.some_image);
+            AppCompatImageView imageView = itemView.findViewById(R.id.some_video);
             Glide.with(itemView.getContext())
                     .load(video.getVideoImageUrl())
                     .into(imageView);
@@ -54,7 +54,8 @@ public class ProfileVideosAdapter extends RecyclerView.Adapter<ProfileVideosAdap
         }
     }
     public void setList(ArrayList<VideoImage> arrayList){
-        this.list = arrayList;
+        list.clear();
+        list.addAll(arrayList);
         notifyDataSetChanged();
     }
     public void setProfileQualifier(String profileQualifier){

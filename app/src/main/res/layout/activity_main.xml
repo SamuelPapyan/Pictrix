@@ -30,6 +30,12 @@
                 android:fontFamily="@font/roboto_bold"
                 android:layout_gravity="center_horizontal"
                 />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/back_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/back_button_icon"
+                />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 

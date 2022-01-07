@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ProfileImageAdapter extends RecyclerView.Adapter<ProfileImageAdapter.ImageViewHolder>{
-    List<Image> list = Collections.emptyList();
+    List<Image> list = new ArrayList<>();
     String profileQualifier;
     ItemClick itemClick = null;
     @NonNull
@@ -44,8 +44,9 @@ public class ProfileImageAdapter extends RecyclerView.Adapter<ProfileImageAdapte
         }
         void initDate(Image image){
             AppCompatImageView imageView = itemView.findViewById(R.id.some_image);
+
             Glide.with(itemView.getContext())
-                    .load(image.getImageSrc())
+                    .load(image.getLittleImageSrc())
                     .into(imageView);
             imageView.setOnClickListener(v->{
                 itemClick.onImageClick(image.getImageSrc());
@@ -53,7 +54,8 @@ public class ProfileImageAdapter extends RecyclerView.Adapter<ProfileImageAdapte
         }
     }
     public void setList(ArrayList<Image> arrayList){
-        this.list = arrayList;
+        list.clear();
+        list.addAll(arrayList);
         notifyDataSetChanged();
     }
     public void setProfileQualifier(String profileQualifier){

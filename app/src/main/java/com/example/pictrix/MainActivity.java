@@ -2,6 +2,7 @@ package com.example.pictrix;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -16,6 +17,7 @@ import com.example.pictrix.fragments.HomeGalleryFragment;
 public class MainActivity extends AppCompatActivity {
 
     AirPlaneModeReceiver airPlaneModeReceiver;
+    AppCompatImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Fragments
         HomeGalleryFragment fragment1 = new HomeGalleryFragment();
+        backButton = findViewById(R.id.back_button);
+
+        backButton.setOnClickListener(v->{
+            getSupportFragmentManager().popBackStackImmediate();
+        });
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);

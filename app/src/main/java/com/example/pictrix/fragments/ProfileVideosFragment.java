@@ -41,7 +41,6 @@ public class ProfileVideosFragment extends Fragment {
     ArrayList<VideoImage> imageList = new ArrayList<>();
     RecyclerView rcView;
     Group noPostGroup;
-    SwipeRefreshLayout swipeRefreshLayout;
     private String profileQualifier;
 
 
@@ -55,11 +54,7 @@ public class ProfileVideosFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         noPostGroup = view.findViewById(R.id.noDataGroup);
-        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
         initRecyclerView(view);
-        swipeRefreshLayout.setOnRefreshListener(()->{
-            loadVideos();
-        });
         loadVideos();
     }
 
@@ -108,12 +103,10 @@ public class ProfileVideosFragment extends Fragment {
                         }
                         rcAdapter.setList(imageList);
                     }
-                    swipeRefreshLayout.setRefreshing(false);
                 }
                 @Override
                 public void onFailure(Call<SearchVideos> call, Throwable t) {
                     System.out.println(t.getLocalizedMessage());
-                    swipeRefreshLayout.setRefreshing(false);
                 }
             });
         }else{
@@ -132,7 +125,6 @@ public class ProfileVideosFragment extends Fragment {
                 rcView.setVisibility(View.GONE);
                 noPostGroup.setVisibility(View.VISIBLE);
             }
-            swipeRefreshLayout.setRefreshing(false);
         }
     }
     private List<com.example.pictrix.room.Videos> getVideosFromRoom(){

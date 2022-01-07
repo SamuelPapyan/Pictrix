@@ -44,7 +44,6 @@ public class ProfileGalleryFragment extends Fragment {
     ArrayList<Image> imageList = new ArrayList<>();
     RecyclerView rcView;
     Group noPostGroup;
-    SwipeRefreshLayout swipeRefreshLayout;
     private final String profileImage = "https://img.freepik.com/free-photo/this-is-beautiful-landscape-emerald-lake-canada-s-youhe-national-park_361746-26.jpg?size=626&ext=jpg";
 
     private String profileQualifier;
@@ -58,11 +57,7 @@ public class ProfileGalleryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         noPostGroup = view.findViewById(R.id.noDataGroup);
-        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
         initRecyclerView(view);
-        swipeRefreshLayout.setOnRefreshListener(()->{
-            loadImages();
-        });
         loadImages();
     }
     public void setProfileQualifier(String profileQualifier){
@@ -103,17 +98,20 @@ public class ProfileGalleryFragment extends Fragment {
                         List<Photo> photos = body.getPhotos();
                         for (Photo photo : photos) {
                             String profileName = photo.getPhotographer();
-                            String image = photo.getSrc().getSmallUrl();
-                            imageList.add(new Image(profileImage, profileName, image));
+                            String image = photo.getSrc().getMediumUrl();
+                            String littleImage = photo.getSrc().getSmallUrl();
+                            imageList.add(new Image(
+                                    profileImage,
+                                    profileName,
+                                    image,
+                                    littleImage));
                         }
                         rcAdapter.setList(imageList);
-                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
                 @Override
                 public void onFailure(Call<SearchPhotos> call, Throwable t) {
                     System.out.println(t.getLocalizedMessage());
-                    swipeRefreshLayout.setRefreshing(false);
                 }
             });
         }
@@ -124,7 +122,11 @@ public class ProfileGalleryFragment extends Fragment {
                 noPostGroup.setVisibility(View.GONE);
                 imageList = new ArrayList<>();
                 for(com.example.pictrix.room.Images image : data){
-                    imageList.add(new Image(profileImage,image.getPhotographer(),image.getImageUrl()));
+                    imageList.add(new Image(
+                            profileImage,
+                            image.getPhotographer(),
+                            image.getImageUrl(),
+                            image.getLittleImageUrl()));
                 }
                 rcAdapter.setList(imageList);
                 rcView.setAdapter(rcAdapter);
@@ -133,7 +135,6 @@ public class ProfileGalleryFragment extends Fragment {
                 rcView.setVisibility(View.GONE);
                 noPostGroup.setVisibility(View.VISIBLE);
             }
-            swipeRefreshLayout.setRefreshing(false);
         }
     }
     private List<com.example.pictrix.room.Images> getImagesFromRoom(){

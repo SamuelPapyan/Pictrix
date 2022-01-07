@@ -13,17 +13,17 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
         Images.class,
         Videos.class
         },
-        version = 2
+        version = 3
 )
 public abstract class AppDatabase extends RoomDatabase{
 
     private static final String FDB_Name = "pictrix_db";
     private static volatile AppDatabase INSTANCE;
 
-    static Migration migration = new Migration(1,2) {
+    static final Migration MIGRATION_2_3 = new Migration(2,3) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-
+            database.execSQL("alter table images add column littleImageUrl varchar(50)");
         }
     };
 
@@ -37,7 +37,10 @@ public abstract class AppDatabase extends RoomDatabase{
                     AppDatabase.class,
                     FDB_Name
             );
-            INSTANCE = appDatabaseBuilder.allowMainThreadQueries().build();
+            INSTANCE = appDatabaseBuilder
+                    .allowMainThreadQueries()
+                    .addMigrations(MIGRATION_2_3)
+                    .build();
             return INSTANCE;
         }
         else

@@ -16,31 +16,42 @@ import androidx.fragment.app.Fragment;
 import com.example.pictrix.MainActivity;
 import com.example.pictrix.R;
 
+import java.io.FileNotFoundException;
+
 public class FullSizeVideoFragment extends Fragment {
+
+    VideoView videoView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fullsize_video_layout,container,false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fullsize_video_layout,container,false);
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.hide();
-        Bundle args = getArguments();
-        if(args != null){
-            VideoView videoView = view.findViewById(R.id.video_view);
-            String videoUrl = args.getString("videoUrl");
-            Uri uri = Uri.parse(videoUrl);
-            videoView.setVideoURI(uri);
-            videoView.setVideoPath(videoUrl);
-            MediaController mediaController = new MediaController(videoView.getContext());
-            mediaController.setAnchorView(videoView);
-            mediaController.setMediaPlayer(videoView);
-            videoView.setMediaController(mediaController);
-            videoView.requestFocus();
-            videoView.start();
-            mediaController.show();
+        videoView = view.findViewById(R.id.video_view);
+        loadVideo();
+        return view;
+    }
+
+    private void loadVideo(){
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            try {
+                String videoUrl = bundle.getString("videoUrl");
+                Uri uri = Uri.parse(videoUrl);
+                videoView.setVideoURI(uri);
+                videoView.setVideoPath(videoUrl);
+                MediaController mediaController = new MediaController(videoView.getContext());
+                mediaController.setAnchorView(videoView);
+                mediaController.setMediaPlayer(videoView);
+                videoView.setMediaController(mediaController);
+                videoView.requestFocus();
+                videoView.start();
+                mediaController.show();
+            }catch (Exception e){
+                System.out.println("------------------File exception-----------------");
+                e.printStackTrace();
+            }
         }
     }
 }

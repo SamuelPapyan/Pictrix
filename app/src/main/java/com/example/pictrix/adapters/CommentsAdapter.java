@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.MyViewHolder>{
 
-    private static List<String> items = Collections.emptyList();
+    private static List<String> items = new ArrayList<>();
 
     @NonNull
     @Override
@@ -39,7 +39,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.MyView
     }
 
     public void refreshData(List<String> commentsList){
-        items = commentsList;
+        items.clear();
+        items.addAll(commentsList);
         notifyDataSetChanged();
     }
 

@@ -15,6 +15,9 @@ public class Images {
     @ColumnInfo(name = "photographer")
     String photographer;
 
+    @ColumnInfo(name = "littleImageUrl")
+    String littleImageUrl;
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -23,11 +26,19 @@ public class Images {
         return photographer;
     }
 
+    public String getLittleImageUrl() {
+        return littleImageUrl;
+    }
+
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
     public void setPhotographer(String photographer) {
         this.photographer = photographer;
+    }
+
+    public void setLittleImageUrl(String littleImageUrl) {
+        this.littleImageUrl = littleImageUrl;
     }
 }

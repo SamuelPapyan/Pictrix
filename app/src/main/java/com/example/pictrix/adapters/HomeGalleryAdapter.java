@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class HomeGalleryAdapter extends RecyclerView.Adapter<HomeGalleryAdapter.GalleryItemViewHolder>{
-    List<Image> list = Collections.emptyList();
+    List<Image> list = new ArrayList<>();
     ItemClick itemClick = null;
     ProfileClick profileClick = null;
     CommentClick commentClick = null;
@@ -97,7 +97,8 @@ public class HomeGalleryAdapter extends RecyclerView.Adapter<HomeGalleryAdapter.
     }
 
     public void setList(ArrayList<Image> list){
-        this.list = list;
+        this.list.clear();
+        this.list.addAll(list);
         notifyDataSetChanged();
     }
 }

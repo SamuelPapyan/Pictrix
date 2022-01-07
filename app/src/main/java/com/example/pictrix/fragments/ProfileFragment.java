@@ -19,6 +19,7 @@ import com.example.pictrix.R;
 import com.example.pictrix.adapters.GalleryAdapter;
 import com.example.pictrix.adapters.ProfileImageAdapter;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 public class ProfileFragment extends Fragment {
     GalleryAdapter galleryAdapter;
@@ -28,8 +29,14 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.profile_layout,container,  false);
+        return inflater.inflate(R.layout.profile_layout,container,  false);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        actionBar.show();
         AppCompatImageView profileImage = view.findViewById(R.id.profileImage);
         galleryAdapter = new GalleryAdapter(this);
         Bundle args = getArguments();
@@ -65,15 +72,16 @@ public class ProfileFragment extends Fragment {
                 .centerCrop()
                 .circleCrop()
                 .into(profileImage);
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
-        actionBar.show();
+        new TabLayoutMediator(tabLayout, viewPager2,(tab, position)->{
+            switch(position){
+                case 0:
+                    tab.setIcon(R.drawable.images_icon);
+                    break;
+                case 1:
+                    tab.setIcon(R.drawable.videos_icon);
+                    break;
+            }
+        }).attach();
         AppCompatTextView appBarTitle = getActivity().findViewById(R.id.appBarHeading);
         appBarTitle.setText("Profile");
     }

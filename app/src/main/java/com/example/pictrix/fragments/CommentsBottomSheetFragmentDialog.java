@@ -60,6 +60,16 @@ public class CommentsBottomSheetFragmentDialog extends BottomSheetDialogFragment
         if(getActivity() != null){
             Gson gson = new Gson();
             String jsonData = sp.getString("comments",null);
+            if(jsonData == null){
+                List<String> list = new ArrayList<>();
+                list.add("Comment 1");
+                list.add("Comment 2");
+                list.add("Comment 3");
+                String json = gson.toJson(list);
+                myEdit.putString("comments",json);
+                myEdit.commit();
+                jsonData = json;
+            }
             Type type = new TypeToken<List<String>>(){}.getType();
             commentsList = gson.fromJson(jsonData,type);
             rcAdapter.refreshData(commentsList);
