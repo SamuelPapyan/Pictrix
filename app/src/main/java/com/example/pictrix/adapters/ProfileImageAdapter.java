@@ -18,9 +18,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class ProfileImageAdapter extends RecyclerView.Adapter<ProfileImageAdapter.ImageViewHolder>{
-    List<Image> list = new ArrayList<>();
-    String profileQualifier;
-    ItemClick itemClick = null;
+    private final List<Image> list = new ArrayList<>();
+    private ItemClick itemClick = null;
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -57,9 +56,6 @@ public class ProfileImageAdapter extends RecyclerView.Adapter<ProfileImageAdapte
         list.clear();
         list.addAll(arrayList);
         notifyDataSetChanged();
-    }
-    public void setProfileQualifier(String profileQualifier){
-        this.profileQualifier = profileQualifier;
     }
     public void setItemClick(ItemClick itemClick){
         this.itemClick = itemClick;

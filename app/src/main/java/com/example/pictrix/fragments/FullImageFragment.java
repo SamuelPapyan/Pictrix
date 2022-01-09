@@ -14,6 +14,9 @@ import com.example.pictrix.MainActivity;
 import com.example.pictrix.R;
 
 public class FullImageFragment extends Fragment {
+
+    private final String IMAGE_SRC = "imageSrc";
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.hide();
@@ -21,7 +24,7 @@ public class FullImageFragment extends Fragment {
         Bundle args = getArguments();
         if(args != null){
             AppCompatImageView image = view.findViewById(R.id.single_image);
-            Glide.with(getActivity()).load(args.getString("imageSrc")).into(image);
+            Glide.with(getActivity()).load(args.getString(IMAGE_SRC)).into(image);
         }
         return view;
     }

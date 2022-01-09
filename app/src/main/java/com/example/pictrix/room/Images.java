@@ -18,6 +18,10 @@ public class Images {
     @ColumnInfo(name = "littleImageUrl")
     String littleImageUrl;
 
+    public int getId(){
+        return id;
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }

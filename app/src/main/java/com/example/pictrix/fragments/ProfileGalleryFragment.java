@@ -40,13 +40,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProfileGalleryFragment extends Fragment {
-    ProfileImageAdapter rcAdapter = new ProfileImageAdapter();
-    ArrayList<Image> imageList = new ArrayList<>();
-    RecyclerView rcView;
-    Group noPostGroup;
+    private ProfileImageAdapter rcAdapter = new ProfileImageAdapter();
+    private ArrayList<Image> imageList = new ArrayList<>();
+    private RecyclerView rcView;
+    private Group noPostGroup;
     private final String profileImage = "https://img.freepik.com/free-photo/this-is-beautiful-landscape-emerald-lake-canada-s-youhe-national-park_361746-26.jpg?size=626&ext=jpg";
 
-    private String profileQualifier;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,9 +58,6 @@ public class ProfileGalleryFragment extends Fragment {
         noPostGroup = view.findViewById(R.id.noDataGroup);
         initRecyclerView(view);
         loadImages();
-    }
-    public void setProfileQualifier(String profileQualifier){
-        this.profileQualifier = profileQualifier;
     }
     private void getImageClick(String src){
         FullImageFragment secondFragment = new FullImageFragment();
@@ -97,10 +93,12 @@ public class ProfileGalleryFragment extends Fragment {
                     if (body != null) {
                         List<Photo> photos = body.getPhotos();
                         for (Photo photo : photos) {
+                            int id = photo.getId();
                             String profileName = photo.getPhotographer();
                             String image = photo.getSrc().getMediumUrl();
                             String littleImage = photo.getSrc().getSmallUrl();
                             imageList.add(new Image(
+                                    id,
                                     profileImage,
                                     profileName,
                                     image,
@@ -123,6 +121,7 @@ public class ProfileGalleryFragment extends Fragment {
                 imageList = new ArrayList<>();
                 for(com.example.pictrix.room.Images image : data){
                     imageList.add(new Image(
+                            image.getId(),
                             profileImage,
                             image.getPhotographer(),
                             image.getImageUrl(),

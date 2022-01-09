@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pictrix.MainActivity;
 import com.example.pictrix.R;
 import com.example.pictrix.adapters.CommentsAdapter;
+import com.example.pictrix.room.AppDatabase;
+import com.example.pictrix.room.CommentDao;
+import com.example.pictrix.room.Comments;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,11 +32,10 @@ import java.util.Set;
 
 public class CommentsBottomSheetFragmentDialog extends BottomSheetDialogFragment {
 
-    SharedPreferences sp;
-    SharedPreferences.Editor myEdit;
-    CommentsAdapter rcAdapter;
-    AppCompatButton submit;
-    List<String> commentsList = new ArrayList<>();
+    private CommentsAdapter rcAdapter;
+    private AppCompatButton submit;
+    private final String POST_ID = "postId";
+    private List<String> commentsList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -44,43 +46,40 @@ public class CommentsBottomSheetFragmentDialog extends BottomSheetDialogFragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sp = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-        myEdit = sp.edit();
         initRecyclerView(view);
         submit = view.findViewById(R.id.submit_comment);
-        loadComments();
-        submit.setOnClickListener(v->{
-            AppCompatEditText editText = view.findViewById(R.id.comment_input);
-            String commentText = editText.getText().toString();
-            saveComment(commentText);
-            dismiss();
-        });
+        Bundle args = getArguments();
+        if(args != null){
+            int postId = args.getInt(POST_ID,-1);
+            loadComments(postId);
+            submit.setOnClickListener(v->{
+                AppCompatEditText editText = view.findViewById(R.id.comment_input);
+                String commentText = editText.getText().toString();
+                saveComment(commentText,postId);
+                dismiss();
+            });
+        }
     }
-    void loadComments(){
+    void loadComments(int postId){
         if(getActivity() != null){
-            Gson gson = new Gson();
-            String jsonData = sp.getString("comments",null);
-            if(jsonData == null){
-                List<String> list = new ArrayList<>();
-                list.add("Comment 1");
-                list.add("Comment 2");
-                list.add("Comment 3");
-                String json = gson.toJson(list);
-                myEdit.putString("comments",json);
-                myEdit.commit();
-                jsonData = json;
+            AppDatabase db = AppDatabase.getInstance(getContext());
+            CommentDao commentDao = db.getCommentDao();
+            List<Comments> comments = commentDao.getComments(postId);
+            commentsList = new ArrayList<>();
+            for(Comments comment : comments){
+                commentsList.add(comment.getContentText());
             }
-            Type type = new TypeToken<List<String>>(){}.getType();
-            commentsList = gson.fromJson(jsonData,type);
             rcAdapter.refreshData(commentsList);
         }
     }
-    void saveComment(String comment){
-        Gson gson = new Gson();
-        commentsList.add(comment);
-        String json = gson.toJson(commentsList);
-        myEdit.putString("comments",json);
-        myEdit.commit();
+    void saveComment(String comment, int postId){
+        AppDatabase db = AppDatabase.getInstance(getContext());
+        CommentDao commentDao = db.getCommentDao();
+        Comments newComment = new Comments();
+        newComment.setPostId(postId);
+        newComment.setContentText(comment);
+        commentDao.insertComment(newComment);
+        dismiss();
     }
     void initRecyclerView(View view){
         RecyclerView rcView = view.findViewById(R.id.rcComments);

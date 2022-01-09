@@ -37,13 +37,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProfileVideosFragment extends Fragment {
-    ProfileVideosAdapter rcAdapter = new ProfileVideosAdapter();
-    ArrayList<VideoImage> imageList = new ArrayList<>();
-    RecyclerView rcView;
-    Group noPostGroup;
-    private String profileQualifier;
-
-
+    private final ProfileVideosAdapter rcAdapter = new ProfileVideosAdapter();
+    private ArrayList<VideoImage> imageList = new ArrayList<>();
+    private RecyclerView rcView;
+    private Group noPostGroup;
+    private final String VIDEO_URL = "videoUrl";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,14 +69,10 @@ public class ProfileVideosFragment extends Fragment {
         rcView.setAdapter(rcAdapter);
     }
 
-    public void setProfileQualifier(String profileQualifier){
-        this.profileQualifier = profileQualifier;
-    }
-
     private void getImageClick(String src){
         FullSizeVideoFragment secondFragment = new FullSizeVideoFragment();
         Bundle args = new Bundle();
-        args.putString("videoUrl",src);
+        args.putString(VIDEO_URL,src);
         secondFragment.setArguments(args);
         MainActivity activity = (MainActivity)getActivity();
         FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
@@ -98,7 +92,7 @@ public class ProfileVideosFragment extends Fragment {
                         List<Video> videos = body.getVideos();
                         for (Video video : videos) {
                             String videoImage = video.getImage();
-                            String videoUrl = video.getUrl();
+                            String videoUrl = video.getVideoFiles().get(1).getLink();
                             imageList.add(new VideoImage(videoImage,videoUrl));
                         }
                         rcAdapter.setList(imageList);

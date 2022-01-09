@@ -20,7 +20,8 @@ import java.io.FileNotFoundException;
 
 public class FullSizeVideoFragment extends Fragment {
 
-    VideoView videoView;
+    private VideoView videoView;
+    private final String VIDEO_URL = "videoUrl";
 
     @Nullable
     @Override
@@ -37,7 +38,7 @@ public class FullSizeVideoFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             try {
-                String videoUrl = bundle.getString("videoUrl");
+                String videoUrl = bundle.getString(VIDEO_URL);
                 Uri uri = Uri.parse(videoUrl);
                 videoView.setVideoURI(uri);
                 videoView.setVideoPath(videoUrl);

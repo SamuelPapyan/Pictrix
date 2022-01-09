@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.MyViewHolder>{
 
-    private static List<String> items = new ArrayList<>();
+    private static final List<String> items = new ArrayList<>();
 
     @NonNull
     @Override

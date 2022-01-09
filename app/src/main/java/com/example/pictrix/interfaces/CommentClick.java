@@ -1,5 +1,5 @@
 package com.example.pictrix.interfaces;
 
 public interface CommentClick {
-    void openBottomSheet();
+    void openBottomSheet(int postId);
 }

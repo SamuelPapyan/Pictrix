@@ -9,7 +9,7 @@ import com.example.pictrix.fragments.ProfileGalleryFragment;
 import com.example.pictrix.fragments.ProfileVideosFragment;
 
 public class GalleryAdapter extends FragmentStateAdapter {
-    private String profileQualifier;
+
     public GalleryAdapter(@NonNull Fragment fragment) {
         super(fragment);
     }
@@ -19,19 +19,11 @@ public class GalleryAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch(position){
             case 0:
-                ProfileGalleryFragment fragment1 = new ProfileGalleryFragment();
-                fragment1.setProfileQualifier(profileQualifier);
-                return fragment1;
+                return new ProfileGalleryFragment();
             case 1:
-                ProfileVideosFragment fragment2 = new ProfileVideosFragment();
-                fragment2.setProfileQualifier(profileQualifier);
-                return fragment2;
+                return new ProfileVideosFragment();
         }
         return new ProfileGalleryFragment();
-    }
-
-    public void setProfileQualifier(String profileQualifier){
-        this.profileQualifier = profileQualifier;
     }
     @Override
     public int getItemCount() {

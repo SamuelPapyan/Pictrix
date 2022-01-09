@@ -11,9 +11,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {
         Images.class,
-        Videos.class
+        Videos.class,
+        Comments.class
         },
-        version = 3
+        version = 4
 )
 public abstract class AppDatabase extends RoomDatabase{
 
@@ -26,9 +27,16 @@ public abstract class AppDatabase extends RoomDatabase{
             database.execSQL("alter table images add column littleImageUrl varchar(50)");
         }
     };
+    static final Migration MIGRATION_3_4 = new Migration(3,4){
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("create table comments(id INTEGER primary key not null, postId INTEGER not null, contentText TEXT);");
+        }
+    };
 
     public abstract ImageDao getImageDao();
     public abstract VideoDao getVideoDao();
+    public abstract CommentDao getCommentDao();
 
     public static synchronized AppDatabase getInstance(Context context){
         if(INSTANCE == null){
@@ -39,7 +47,7 @@ public abstract class AppDatabase extends RoomDatabase{
             );
             INSTANCE = appDatabaseBuilder
                     .allowMainThreadQueries()
-                    .addMigrations(MIGRATION_2_3)
+                    .addMigrations(MIGRATION_2_3, MIGRATION_3_4)
                     .build();
             return INSTANCE;
         }

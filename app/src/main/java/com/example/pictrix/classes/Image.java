@@ -5,13 +5,15 @@ import java.util.ArrayList;
 
 public class Image implements Serializable {
 
+    private int id;
     private String profileImage;
     private String profileName;
     private String imageSrc;
     private String littleImageSrc;
     private boolean isLiked;
 
-    public Image(String profileImage, String profileName, String imageSrc, String littleImageSrc){
+    public Image(int id, String profileImage, String profileName, String imageSrc, String littleImageSrc){
+        this.id = id;
         this.imageSrc = imageSrc;
         this.profileImage = profileImage;
         this.profileName = profileName;
@@ -37,6 +39,10 @@ public class Image implements Serializable {
 
     public boolean getIsLiked(){
         return isLiked;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setLiked(boolean liked) {

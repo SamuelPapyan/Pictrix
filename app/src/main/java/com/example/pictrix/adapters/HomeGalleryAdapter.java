@@ -22,10 +22,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class HomeGalleryAdapter extends RecyclerView.Adapter<HomeGalleryAdapter.GalleryItemViewHolder>{
-    List<Image> list = new ArrayList<>();
-    ItemClick itemClick = null;
-    ProfileClick profileClick = null;
-    CommentClick commentClick = null;
+    private final List<Image> list = new ArrayList<>();
+    private ItemClick itemClick = null;
+    private ProfileClick profileClick = null;
+    private CommentClick commentClick = null;
     @NonNull
     @Override
     public GalleryItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -61,9 +61,9 @@ public class HomeGalleryAdapter extends RecyclerView.Adapter<HomeGalleryAdapter.
             like.setOnClickListener(v->{
                 image.setLiked(!image.getIsLiked());
                 if(image.getIsLiked())
-                    like.setImageResource(R.drawable.like_off);
-                else
                     like.setImageResource(R.drawable.like_on);
+                else
+                    like.setImageResource(R.drawable.like_off);
                 notifyDataSetChanged();
             });
             imageView.setOnClickListener(v->{
@@ -81,7 +81,7 @@ public class HomeGalleryAdapter extends RecyclerView.Adapter<HomeGalleryAdapter.
                 itemView.getContext().startActivity(modeIntent);
             });
             commentButton.setOnClickListener(v->{
-                commentClick.openBottomSheet();
+                commentClick.openBottomSheet(image.getId());
             });
         }
     }

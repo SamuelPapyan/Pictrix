@@ -22,9 +22,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class ProfileFragment extends Fragment {
-    GalleryAdapter galleryAdapter;
-    TabLayout tabLayout;
-    ViewPager2 viewPager2;
+    private GalleryAdapter galleryAdapter;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager2;
+    private final String PROFILE_NAME = "profile";
 
     @Nullable
     @Override
@@ -37,13 +38,15 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.show();
+        if(getActivity() != null){
+            getActivity().findViewById(R.id.back_button).setVisibility(View.VISIBLE);
+        }
         AppCompatImageView profileImage = view.findViewById(R.id.profileImage);
         galleryAdapter = new GalleryAdapter(this);
         Bundle args = getArguments();
         if(args != null){
-            galleryAdapter.setProfileQualifier(args.getString("profile"));
             AppCompatTextView profileName = view.findViewById(R.id.name_surname);
-            profileName.setText(args.getString("profile"));
+            profileName.setText(args.getString(PROFILE_NAME));
         }
         tabLayout = view.findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.images_icon));

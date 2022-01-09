@@ -19,9 +19,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class ProfileVideosAdapter extends RecyclerView.Adapter<ProfileVideosAdapter.VideoViewHolder>{
-    List<VideoImage> list = new ArrayList<>();
-    String profileQualifier;
-    ItemClick itemClick = null;
+    private final List<VideoImage> list = new ArrayList<>();
+    private ItemClick itemClick = null;
     @NonNull
     @Override
     public VideoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -57,9 +56,6 @@ public class ProfileVideosAdapter extends RecyclerView.Adapter<ProfileVideosAdap
         list.clear();
         list.addAll(arrayList);
         notifyDataSetChanged();
-    }
-    public void setProfileQualifier(String profileQualifier){
-        this.profileQualifier = profileQualifier;
     }
     public void setItemClick(ItemClick itemClick){
         this.itemClick = itemClick;
