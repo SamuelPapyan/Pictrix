@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
 
         backButton.setOnClickListener(v->{
-            //NavDirections action = ProfileFragmentDirections.actionProfileFragmentToHomeGalleryFragment();
             navController.popBackStack();
         });
 
