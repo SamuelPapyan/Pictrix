@@ -76,7 +76,7 @@ public class ProfileGalleryFragment extends Fragment {
         rcView.setLayoutManager(glm);
         rcAdapter.setItemClick(new ItemClick() {
             @Override
-            public void onImageClick(String src) {
+            public void onImageClick(View view, String src) {
                 getImageClick(src);
             }
         });

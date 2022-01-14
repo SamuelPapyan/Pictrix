@@ -24,13 +24,13 @@ public abstract class AppDatabase extends RoomDatabase{
     static final Migration MIGRATION_2_3 = new Migration(2,3) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("alter table images add column littleImageUrl varchar(50)");
+            database.execSQL("ALTER TABLE images ADD COLUMN littleImageUrl varchar(50)");
         }
     };
     static final Migration MIGRATION_3_4 = new Migration(3,4){
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("create table comments(id INTEGER primary key not null, postId INTEGER not null, contentText TEXT);");
+            database.execSQL("CREATE TABLE comments(id INTEGER PRIMARY KEY NOT NULL, postId INTEGER NOT NULL, contentText TEXT);");
         }
     };
 
@@ -49,9 +49,7 @@ public abstract class AppDatabase extends RoomDatabase{
                     .allowMainThreadQueries()
                     .addMigrations(MIGRATION_2_3, MIGRATION_3_4)
                     .build();
-            return INSTANCE;
         }
-        else
-            return INSTANCE;
+        return INSTANCE;
     }
 }

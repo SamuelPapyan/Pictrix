@@ -21,10 +21,16 @@ public class FullImageFragment extends Fragment {
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.hide();
         View view = inflater.inflate(R.layout.full_image_layout,container,false);
-        Bundle args = getArguments();
-        if(args != null){
+        if(getArguments() != null){
             AppCompatImageView image = view.findViewById(R.id.single_image);
-            Glide.with(getActivity()).load(args.getString(IMAGE_SRC)).into(image);
+            String imageUrl;
+            if(FullImageFragmentArgs.fromBundle(getArguments()).getImageUrl() != "null")
+                imageUrl = FullImageFragmentArgs.fromBundle(getArguments()).getImageUrl();
+            else
+                imageUrl = getArguments().getString(IMAGE_SRC);
+            Glide.with(getActivity())
+                    .load(imageUrl)
+                    .into(image);
         }
         return view;
     }

@@ -17,6 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -85,8 +87,8 @@ public class HomeGalleryFragment extends Fragment {
         rcView.setLayoutManager(llm);
         rcAdapter.setItemClick(new ItemClick() {
             @Override
-            public void onImageClick(String src) {
-                getImageClick(src);
+            public void onImageClick(View view, String src) {
+                getImageClick(view, src);
             }
         });
         rcAdapter.setCommentClick(new CommentClick() {
@@ -101,33 +103,23 @@ public class HomeGalleryFragment extends Fragment {
         });
         rcAdapter.setProfileClick(new ProfileClick() {
             @Override
-            public void onProfileClick(String profileName) {
-                getProfileClick(profileName);
+            public void onProfileClick(View view, String profileName) {
+                getProfileClick(view, profileName);
             }
         });
     }
 
-    private void getProfileClick(String profileName){
-        ProfileFragment secondFragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(PROFILE_NAME,profileName);
-        secondFragment.setArguments(args);
-        MainActivity activity = (MainActivity)getActivity();
-        FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_container,secondFragment);
-        ft.addToBackStack(null);
-        ft.commit();
+    private void getProfileClick(View view, String profileName){
+        HomeGalleryFragmentDirections.ActionHomeGalleryFragmentToProfileFragment action =
+                HomeGalleryFragmentDirections.actionHomeGalleryFragmentToProfileFragment();
+        action.setProfileName(profileName);
+        Navigation.findNavController(view).navigate(action);
     }
-    private void getImageClick(String src){
-        FullImageFragment secondFragment = new FullImageFragment();
-        Bundle args = new Bundle();
-        args.putString(IMAGE_SRC,src);
-        secondFragment.setArguments(args);
-        MainActivity activity = (MainActivity)getActivity();
-        FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_container,secondFragment);
-        ft.addToBackStack(null);
-        ft.commit();
+    private void getImageClick(View view, String src){
+        HomeGalleryFragmentDirections.ActionHomeGalleryFragmentToFullImageFragment action =
+                HomeGalleryFragmentDirections.actionHomeGalleryFragmentToFullImageFragment();
+        action.setImageUrl(src);
+        Navigation.findNavController(view).navigate(action);
     }
     private void saveToDb(ArrayList<Image> images){
         AppDatabase db = AppDatabase.getInstance(getContext());

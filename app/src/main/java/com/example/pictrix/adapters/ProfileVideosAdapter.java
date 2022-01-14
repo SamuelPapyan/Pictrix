@@ -48,7 +48,7 @@ public class ProfileVideosAdapter extends RecyclerView.Adapter<ProfileVideosAdap
                     .load(video.getVideoImageUrl())
                     .into(imageView);
             imageView.setOnClickListener(v->{
-                itemClick.onImageClick(video.getVideoUrl());
+                itemClick.onImageClick(v, video.getVideoUrl());
             });
         }
     }

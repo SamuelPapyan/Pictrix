@@ -43,10 +43,9 @@ public class ProfileFragment extends Fragment {
         }
         AppCompatImageView profileImage = view.findViewById(R.id.profileImage);
         galleryAdapter = new GalleryAdapter(this);
-        Bundle args = getArguments();
-        if(args != null){
+        if(getArguments() != null){
             AppCompatTextView profileName = view.findViewById(R.id.name_surname);
-            profileName.setText(args.getString(PROFILE_NAME));
+            profileName.setText(ProfileFragmentArgs.fromBundle(getArguments()).getProfileName());
         }
         tabLayout = view.findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.images_icon));

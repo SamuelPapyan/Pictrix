@@ -48,7 +48,7 @@ public class ProfileImageAdapter extends RecyclerView.Adapter<ProfileImageAdapte
                     .load(image.getLittleImageSrc())
                     .into(imageView);
             imageView.setOnClickListener(v->{
-                itemClick.onImageClick(image.getImageSrc());
+                itemClick.onImageClick(v, image.getImageSrc());
             });
         }
     }

@@ -67,10 +67,10 @@ public class HomeGalleryAdapter extends RecyclerView.Adapter<HomeGalleryAdapter.
                 notifyDataSetChanged();
             });
             imageView.setOnClickListener(v->{
-                itemClick.onImageClick(image.getImageSrc());
+                itemClick.onImageClick(v, image.getImageSrc());
             });
             profileName.setOnClickListener(v->{
-                profileClick.onProfileClick(profileName.getText().toString());
+                profileClick.onProfileClick(v, profileName.getText().toString());
             });
             shareButton.setOnClickListener(v->{
                 Intent intent = new Intent(Intent.ACTION_SEND);

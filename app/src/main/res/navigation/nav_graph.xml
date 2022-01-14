@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeGalleryFragment">
+
+    <fragment
+        android:id="@+id/homeGalleryFragment"
+        android:name="com.example.pictrix.fragments.HomeGalleryFragment"
+        android:label="HomeGalleryFragment"
+        tools:layout="@layout/home_gallery_layout"
+        >
+        <action
+            android:id="@+id/action_homeGalleryFragment_to_fullImageFragment"
+            app:destination="@id/fullImageFragment" />
+        <action
+            android:id="@+id/action_homeGalleryFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fullImageFragment"
+        android:name="com.example.pictrix.fragments.FullImageFragment"
+        android:label="FullImageFragment"
+        tools:layout="@layout/full_image_layout"
+        >
+        <argument
+            android:name="imageUrl"
+            app:argType="string"
+            android:defaultValue="null"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.pictrix.fragments.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/profile_layout"
+        >
+        <argument
+            android:name="profileName"
+            app:argType="string"
+            android:defaultValue="null"
+            />
+        <action android:id="@+id/action_profileFragment_to_homeGalleryFragment"
+            app:destination="@id/homeGalleryFragment" />
+    </fragment>
+</navigation>

@@ -4,13 +4,18 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import java.util.List;
 
 @Dao
 public interface ImageDao {
-    @Query("select * from images")
+    @Query("SELECT * FROM images")
     List<Images> getImages();
+
+    @Transaction
+    @Query("SELECT * FROM images")
+    List<PostWithComments> getPostsWithComments();
 
     @Insert
     void insert(Images image);

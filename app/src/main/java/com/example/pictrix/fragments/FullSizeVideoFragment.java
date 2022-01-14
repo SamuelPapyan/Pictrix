@@ -35,10 +35,10 @@ public class FullSizeVideoFragment extends Fragment {
     }
 
     private void loadVideo(){
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
+        Bundle args = getArguments();
+        if (args != null) {
             try {
-                String videoUrl = bundle.getString(VIDEO_URL);
+                String videoUrl = args.getString(VIDEO_URL);
                 Uri uri = Uri.parse(videoUrl);
                 videoView.setVideoURI(uri);
                 videoView.setVideoPath(videoUrl);
