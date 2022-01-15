@@ -23,6 +23,7 @@ import com.example.pictrix.interfaces.ItemClick;
 import com.example.pictrix.retrofit.SearchPhotos;
 import com.example.pictrix.retrofit.SearchVideos;
 import com.example.pictrix.retrofit.Video;
+import com.example.pictrix.retrofit.VideoFiles;
 import com.example.pictrix.retrofit.Videos;
 import com.example.pictrix.room.AppDatabase;
 import com.example.pictrix.room.ImageDao;
@@ -92,7 +93,13 @@ public class ProfileVideosFragment extends Fragment {
                         List<Video> videos = body.getVideos();
                         for (Video video : videos) {
                             String videoImage = video.getImage();
-                            String videoUrl = video.getVideoFiles().get(1).getLink();
+                            String videoUrl = video.getUrl();
+                            for(VideoFiles vf : video.getVideoFiles()){
+                                if(vf.getWidth() <= 1200 && vf.getHeight() <= 1500) {
+                                    videoUrl = vf.getLink();
+                                    break;
+                                }
+                            }
                             imageList.add(new VideoImage(videoImage,videoUrl));
                         }
                         rcAdapter.setList(imageList);
