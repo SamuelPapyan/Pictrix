@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pictrix.MainActivity;
 import com.example.pictrix.R;
 import com.example.pictrix.adapters.CommentsAdapter;
+import com.example.pictrix.databinding.CommentsLayoutBinding;
 import com.example.pictrix.room.AppDatabase;
 import com.example.pictrix.room.CommentDao;
 import com.example.pictrix.room.Comments;
@@ -33,28 +34,28 @@ import java.util.Set;
 public class CommentsBottomSheetFragmentDialog extends BottomSheetDialogFragment {
 
     private CommentsAdapter rcAdapter;
-    private AppCompatButton submit;
     private final String POST_ID = "postId";
     private List<String> commentsList = new ArrayList<>();
+
+    private CommentsLayoutBinding viewBindnig = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.comments_layout, container, false);
+        viewBindnig = CommentsLayoutBinding.inflate(inflater, container,false);
+        return viewBindnig.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView(view);
-        submit = view.findViewById(R.id.submit_comment);
         Bundle args = getArguments();
         if(args != null){
             int postId = args.getInt(POST_ID,-1);
             loadComments(postId);
-            submit.setOnClickListener(v->{
-                AppCompatEditText editText = view.findViewById(R.id.comment_input);
-                String commentText = editText.getText().toString();
+            viewBindnig.submitComment.setOnClickListener(v->{
+                String commentText = viewBindnig.commentInput.getText().toString();
                 saveComment(commentText,postId);
                 dismiss();
             });
@@ -82,10 +83,9 @@ public class CommentsBottomSheetFragmentDialog extends BottomSheetDialogFragment
         dismiss();
     }
     void initRecyclerView(View view){
-        RecyclerView rcView = view.findViewById(R.id.rcComments);
         rcAdapter = new CommentsAdapter();
         LinearLayoutManager llm = new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false);
-        rcView.setLayoutManager(llm);
-        rcView.setAdapter(rcAdapter);
+        viewBindnig.rcComments.setLayoutManager(llm);
+        viewBindnig.rcComments.setAdapter(rcAdapter);
     }
 }

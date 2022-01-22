@@ -27,6 +27,7 @@ import com.example.pictrix.MainActivity;
 import com.example.pictrix.R;
 import com.example.pictrix.adapters.HomeGalleryAdapter;
 import com.example.pictrix.classes.Image;
+import com.example.pictrix.databinding.HomeGalleryLayoutBinding;
 import com.example.pictrix.interfaces.CommentClick;
 import com.example.pictrix.interfaces.ItemClick;
 import com.example.pictrix.interfaces.ProfileClick;
@@ -49,24 +50,21 @@ import retrofit2.Response;
 public class HomeGalleryFragment extends Fragment {
     private HomeGalleryAdapter rcAdapter = new HomeGalleryAdapter();
     private ArrayList<Image> imageList = new ArrayList<>();
-    private RecyclerView rcView;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private Group noPostsGroup;
-    private final String IMAGE_SRC = "imageSrc";
-    private final String PROFILE_NAME = "profile";
     private final String POST_ID = "postId";
     private final String PROFILE_IMAGE = "https://img.freepik.com/free-photo/this-is-beautiful-landscape-emerald-lake-canada-s-youhe-national-park_361746-26.jpg?size=626&ext=jpg";
+
+    private HomeGalleryLayoutBinding viewBinding = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.home_gallery_layout, container, false);
+        viewBinding = HomeGalleryLayoutBinding.inflate(inflater,container,false);
+        return viewBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setRecyclerView(view);
-        noPostsGroup = view.findViewById(R.id.noDataGroup);
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.show();
         if(getActivity() != null){
@@ -74,17 +72,15 @@ public class HomeGalleryFragment extends Fragment {
         }
         AppCompatTextView appBarTitle = getActivity().findViewById(R.id.appBarHeading);
         appBarTitle.setText("Home");
-        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
-        swipeRefreshLayout.setOnRefreshListener(()->{
+        viewBinding.swipeRefresh.setOnRefreshListener(()->{
             loadImages();
         });
         loadImages();
     }
 
     private void setRecyclerView(View view){
-        rcView = view.findViewById(R.id.mainGalleryRcView);
         LinearLayoutManager llm = new LinearLayoutManager(view.getContext(),RecyclerView.VERTICAL,false);
-        rcView.setLayoutManager(llm);
+        viewBinding.mainGalleryRcView.setLayoutManager(llm);
         rcAdapter.setItemClick(new ItemClick() {
             @Override
             public void onImageClick(View view, String src) {
@@ -146,16 +142,16 @@ public class HomeGalleryFragment extends Fragment {
                 if(images != null) {
                     imageList.addAll(images);
                     rcAdapter.setList(imageList);
-                    rcView.setAdapter(rcAdapter);
+                    viewBinding.mainGalleryRcView.setAdapter(rcAdapter);
                     saveToDb(imageList);
                 }
             });
-            swipeRefreshLayout.setRefreshing(false);
+            viewBinding.swipeRefresh.setRefreshing(false);
         }else{
             List<com.example.pictrix.room.Images> data = getImagesFromRoom();
             if(data.size() > 0){
-                rcView.setVisibility(View.VISIBLE);
-                noPostsGroup.setVisibility(View.GONE);
+                viewBinding.mainGalleryRcView.setVisibility(View.VISIBLE);
+                viewBinding.noDataGroup.setVisibility(View.GONE);
                 imageList = new ArrayList<>();
                 for(com.example.pictrix.room.Images image : data){
                     imageList.add(new Image(
@@ -167,12 +163,12 @@ public class HomeGalleryFragment extends Fragment {
                     ));
                 }
                 rcAdapter.setList(imageList);
-                rcView.setAdapter(rcAdapter);
+                viewBinding.mainGalleryRcView.setAdapter(rcAdapter);
             }else{
-                rcView.setVisibility(View.GONE);
-                noPostsGroup.setVisibility(View.VISIBLE);
+                viewBinding.mainGalleryRcView.setVisibility(View.GONE);
+                viewBinding.noDataGroup.setVisibility(View.VISIBLE);
             }
-            swipeRefreshLayout.setRefreshing(false);
+            viewBinding.swipeRefresh.setRefreshing(false);
         }
 
     }

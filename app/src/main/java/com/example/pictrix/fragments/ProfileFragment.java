@@ -18,19 +18,20 @@ import com.example.pictrix.MainActivity;
 import com.example.pictrix.R;
 import com.example.pictrix.adapters.GalleryAdapter;
 import com.example.pictrix.adapters.ProfileImageAdapter;
+import com.example.pictrix.databinding.ProfileLayoutBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class ProfileFragment extends Fragment {
     private GalleryAdapter galleryAdapter;
-    private TabLayout tabLayout;
-    private ViewPager2 viewPager2;
-    private final String PROFILE_NAME = "profile";
+
+    private ProfileLayoutBinding viewBinding = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.profile_layout,container,  false);
+        viewBinding = ProfileLayoutBinding.inflate(inflater,container,false);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -41,22 +42,19 @@ public class ProfileFragment extends Fragment {
         if(getActivity() != null){
             getActivity().findViewById(R.id.back_button).setVisibility(View.VISIBLE);
         }
-        AppCompatImageView profileImage = view.findViewById(R.id.profileImage);
         galleryAdapter = new GalleryAdapter(this);
         if(getArguments() != null){
             AppCompatTextView profileName = view.findViewById(R.id.name_surname);
             profileName.setText(ProfileFragmentArgs.fromBundle(getArguments()).getProfileName());
         }
-        tabLayout = view.findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.images_icon));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.videos_icon));
-        viewPager2 = view.findViewById(R.id.pager);
-        viewPager2.setAdapter(galleryAdapter);
-        viewPager2.setOffscreenPageLimit(2);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        viewBinding.tabLayout.addTab(viewBinding.tabLayout.newTab().setIcon(R.drawable.images_icon));
+        viewBinding.tabLayout.addTab(viewBinding.tabLayout.newTab().setIcon(R.drawable.videos_icon));
+        viewBinding.pager.setAdapter(galleryAdapter);
+        viewBinding.pager.setOffscreenPageLimit(2);
+        viewBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager2.setCurrentItem(tab.getPosition());
+                viewBinding.pager.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -73,8 +71,8 @@ public class ProfileFragment extends Fragment {
                 .load("https://img.freepik.com/free-photo/this-is-beautiful-landscape-emerald-lake-canada-s-youhe-national-park_361746-26.jpg?size=626&ext=jpg")
                 .centerCrop()
                 .circleCrop()
-                .into(profileImage);
-        new TabLayoutMediator(tabLayout, viewPager2,(tab, position)->{
+                .into(viewBinding.profileImage);
+        new TabLayoutMediator(viewBinding.tabLayout, viewBinding.pager,(tab, position)->{
             switch(position){
                 case 0:
                     tab.setIcon(R.drawable.images_icon);

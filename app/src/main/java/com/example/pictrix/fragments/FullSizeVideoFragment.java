@@ -15,23 +15,29 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pictrix.MainActivity;
 import com.example.pictrix.R;
+import com.example.pictrix.databinding.FullsizeVideoLayoutBinding;
 
 import java.io.FileNotFoundException;
 
 public class FullSizeVideoFragment extends Fragment {
 
-    private VideoView videoView;
     private final String VIDEO_URL = "videoUrl";
+
+    private FullsizeVideoLayoutBinding viewBinding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fullsize_video_layout,container,false);
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.hide();
-        videoView = view.findViewById(R.id.video_view);
+        viewBinding = FullsizeVideoLayoutBinding.inflate(inflater,container,false);
+        return viewBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         loadVideo();
-        return view;
     }
 
     private void loadVideo(){
@@ -40,14 +46,14 @@ public class FullSizeVideoFragment extends Fragment {
             try {
                 String videoUrl = args.getString(VIDEO_URL);
                 Uri uri = Uri.parse(videoUrl);
-                videoView.setVideoURI(uri);
-                videoView.setVideoPath(videoUrl);
-                MediaController mediaController = new MediaController(videoView.getContext());
-                mediaController.setAnchorView(videoView);
-                mediaController.setMediaPlayer(videoView);
-                videoView.setMediaController(mediaController);
-                videoView.requestFocus();
-                videoView.start();
+                viewBinding.videoView.setVideoURI(uri);
+                viewBinding.videoView.setVideoPath(videoUrl);
+                MediaController mediaController = new MediaController(viewBinding.videoView.getContext());
+                mediaController.setAnchorView(viewBinding.videoView);
+                mediaController.setMediaPlayer(viewBinding.videoView);
+                viewBinding.videoView.setMediaController(mediaController);
+                viewBinding.videoView.requestFocus();
+                viewBinding.videoView.start();
                 mediaController.show();
             }catch (Exception e){
                 System.out.println("------------------File exception-----------------");
